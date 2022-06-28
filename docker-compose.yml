@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  links:
+    restart: always
+    container_name: ozon_fintech
+    build: ./
+    command: ./Links
+    ports:
+      - "8000:8080"
+    depends_on:
+      - db
+
+  db:
+    restart: unless-stopped
+    image: postgres:latest
+    container_name: clair_postgres
+
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "ozon_fintech"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - .:/var/lib/postgresql/data
+      - ./schema/init.up.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5436:5432"
