@@ -5,7 +5,17 @@ services:
     restart: always
     container_name: ozon_fintech
     build: ./
-    command: ./Links
+    # Так как docker-compose, к сожалению, не дает передавать флаги командной строки,
+    # то их приходится указывать здесь в файле.
+
+    # Раскомментируйте нужную строку для работы в режимах:
+
+    # Режим работы, где в качестве хранилища POSTGRES
+    command: ./Links -db_type POSTGRES
+
+    # Режим работы, где в качестве хранилища STORAGE(собственное хранилище)
+#    command: ./Links -db_type STORAGE
+
     ports:
       - "8000:8080"
     depends_on:

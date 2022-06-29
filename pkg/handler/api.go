@@ -13,15 +13,20 @@ func (h *Handler) getFullLink(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.service.ValidateLink(shortLink); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%s: link must contains only symbols [a-z, A-Z, _] and length = %d",
+		fmt.Fprintf(w, "%s: link must contains only symbols [a-z, A-Z, 0-9, _] and length = %d",
 			err.Error(), service.LengthLink)
 		return
 	}
 
 	fullLink, err := h.service.GetFullLink(shortLink)
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprintf(w, "%s: %s", err.Error(), "short link is not defined")
+		if err.Error() == storage.KeyError {
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprintf(w, "%s: %s", err.Error(), "short link is not defined")
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "%s", err.Error())
+		}
 	} else {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "%s", fullLink)

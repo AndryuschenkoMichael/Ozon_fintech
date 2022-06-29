@@ -31,5 +31,9 @@ func generateAlphabet() []rune {
 		alphabet = append(alphabet, i)
 	}
 
+	for i := '0'; i <= '9'; i++ {
+		alphabet = append(alphabet, i)
+	}
+
 	return alphabet
 }

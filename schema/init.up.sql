@@ -5,5 +5,5 @@ CREATE TABLE links
     full_link varchar(255) not null unique
 );
 
-CREATE INDEX ON links(short_link)
-CREATE INDEX ON links(full_link)
+CREATE INDEX ON links(short_link);
+CREATE INDEX ON links(full_link);
