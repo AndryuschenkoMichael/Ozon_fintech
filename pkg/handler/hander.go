@@ -1,9 +1,11 @@
 package handler
 
 import (
+	_ "Ozon_fintech/docs"
 	"Ozon_fintech/pkg/service"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 type Handler struct {
@@ -24,6 +26,9 @@ func (h *Handler) InitRoutes() chi.Router {
 		r.Get("/get-full-link", h.getFullLink)
 		r.Post("/post-link", h.postLink)
 	})
+
+	router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:8000/swagger/doc.json")))
 
 	return router
 }

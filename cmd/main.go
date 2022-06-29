@@ -15,6 +15,13 @@ import (
 	"os"
 )
 
+// @title Ozon fintech
+// @version 1.0
+// @description Zip linker service
+
+// @host localhost:8000
+// @BasePath /
+
 var dbType = flag.String("db_type", "STORAGE", "type of db")
 
 func main() {
