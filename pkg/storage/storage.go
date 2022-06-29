@@ -80,19 +80,14 @@ func (s *Storage) serve(f Func) {
 
 		value, ok := storage[req.key]
 		if !ok {
-			for _, ok := storage[req.key]; !ok; {
-				select {
-				case <-time.After(timeout):
-					req.response <- result{value: "", err: errors.New(timeoutError)}
-				default:
-					value := f()
-					if _, ok := used[value]; !ok {
-						used[value] = req.key
-						storage[req.key] = value
-						req.response <- result{value: value, err: nil}
-					}
+			for {
+				value := f()
+				if _, ok := used[value]; !ok {
+					used[value] = req.key
+					storage[req.key] = value
+					req.response <- result{value: value, err: nil}
+					break
 				}
-
 			}
 		} else {
 			req.response <- result{value: value, err: errors.New(KeyExistError)}

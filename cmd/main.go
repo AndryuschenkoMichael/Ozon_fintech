@@ -32,7 +32,7 @@ func main() {
 	//})
 	//
 	//if err != nil {
-	//	log.Fatalf("Faild to initialize db: %s", err.Error())
+	//	log.Fatalf("Failed to initialize db: %s", err.Error())
 	//}
 
 	generators := strgen.NewStringGeneratorRandom(service.LengthLink)

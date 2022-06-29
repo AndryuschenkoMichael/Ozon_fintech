@@ -42,7 +42,7 @@ func (h *Handler) postLink(w http.ResponseWriter, r *http.Request) {
 	}
 
 	shortLink, err := h.service.SetShortLink(linkInfo.FullLink)
-	if err.Error() == storage.KeyExistError {
+	if err != nil && err.Error() == storage.KeyExistError {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprintf(w, "%s %s", "short link is already in system. short link:", shortLink)
 		return
