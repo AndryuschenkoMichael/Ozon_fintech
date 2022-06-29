@@ -22,7 +22,6 @@ func (r *RandomStringGenerator) GenerateString() string {
 }
 
 func NewRandomStringGenerator(length int, alphabet []rune) *RandomStringGenerator {
-
 	return &RandomStringGenerator{
 		length:   length,
 		alphabet: alphabet,

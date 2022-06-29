@@ -21,7 +21,7 @@ func (h *Handler) InitRoutes() chi.Router {
 	router.Use(middleware.Logger)
 
 	router.Route("/api", func(r chi.Router) {
-		r.Get("/get-short-link", h.getShortLink)
+		r.Get("/get-full-link", h.getFullLink)
 		r.Post("/post-link", h.postLink)
 	})
 

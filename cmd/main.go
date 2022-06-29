@@ -5,11 +5,12 @@ import (
 	"Ozon_fintech/pkg/handler"
 	"Ozon_fintech/pkg/repository"
 	"Ozon_fintech/pkg/service"
+	"Ozon_fintech/pkg/storage"
+	strgen "Ozon_fintech/pkg/string_generator"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
-	"os"
 )
 
 func main() {
@@ -21,20 +22,22 @@ func main() {
 		log.Fatalf("Error with initializing environment file: %s", err.Error())
 	}
 
-	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     viper.GetString("db.host"),
-		Port:     viper.GetString("db.port"),
-		Username: viper.GetString("db.username"),
-		Password: os.Getenv("DB_PASSWORD"),
-		DBName:   viper.GetString("db.dbname"),
-		SSLMode:  viper.GetString("db.sslmode"),
-	})
+	//db, err := repository.NewPostgresDB(repository.Config{
+	//	Host:     viper.GetString("db.host"),
+	//	Port:     viper.GetString("db.port"),
+	//	Username: viper.GetString("db.username"),
+	//	Password: os.Getenv("DB_PASSWORD"),
+	//	DBName:   viper.GetString("db.dbname"),
+	//	SSLMode:  viper.GetString("db.sslmode"),
+	//})
+	//
+	//if err != nil {
+	//	log.Fatalf("Faild to initialize db: %s", err.Error())
+	//}
 
-	if err != nil {
-		log.Fatalf("Faild to initialize db: %s", err.Error())
-	}
-
-	repositories := repository.NewRepositoryPostgres(db)
+	generators := strgen.NewStringGeneratorRandom(service.LengthLink)
+	storages := storage.New(generators.GenerateString)
+	repositories := repository.NewRepositoryStorage(storages)
 	services := service.NewService(repositories)
 	handlers := handler.NewHandler(services)
 
