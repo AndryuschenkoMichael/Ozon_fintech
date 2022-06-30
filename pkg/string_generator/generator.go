@@ -1,19 +1,24 @@
+// Package string_generator generate random string
 package string_generator
 
+// GeneratorStr is type of interface witch generate random string
 type GeneratorStr interface {
 	GenerateString() string
 }
 
+// StringGenerator needs for SOLID
 type StringGenerator struct {
 	GeneratorStr
 }
 
+// NewStringGeneratorRandom implement StringGenerator
 func NewStringGeneratorRandom(length int) *StringGenerator {
 	return &StringGenerator{
 		GeneratorStr: NewRandomStringGenerator(length, generateAlphabet()),
 	}
 }
 
+// NewStringGeneratorPermutation implement StringGenerator
 func NewStringGeneratorPermutation(length int) *StringGenerator {
 	return &StringGenerator{
 		GeneratorStr: NewPermutationStringGenerator(length, generateAlphabet()),

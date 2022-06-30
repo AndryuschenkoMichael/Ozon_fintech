@@ -18,6 +18,7 @@ type Config struct {
 	SSLMode  string
 }
 
+// NewPostgresDB - connect to Postgres
 func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 	db, err := sqlx.Open("postgres",
 		fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",

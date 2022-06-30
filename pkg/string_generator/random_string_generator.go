@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// RandomStringGenerator implement GeneratorStr
 type RandomStringGenerator struct {
 	length   int
 	alphabet []rune

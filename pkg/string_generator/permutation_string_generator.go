@@ -2,14 +2,17 @@ package string_generator
 
 import "bytes"
 
+// result is container for string result
 type result struct {
 	value string
 }
 
+// request need to get result from server
 type request struct {
 	response chan<- result
 }
 
+// PermutationStringGenerator implement interface GeneratorStr
 type PermutationStringGenerator struct {
 	length   int
 	alphabet []rune
@@ -35,6 +38,7 @@ func NewPermutationStringGenerator(length int, alphabet []rune) *PermutationStri
 	return gen
 }
 
+// serve for serving requests
 func (p *PermutationStringGenerator) serve() {
 	perm := make([]int, p.length)
 	for req := range p.requests {
@@ -42,6 +46,7 @@ func (p *PermutationStringGenerator) serve() {
 	}
 }
 
+// deliver get next permutation
 func (p *PermutationStringGenerator) deliver(response chan<- result, perm []int) {
 	i := p.length - 1
 

@@ -1,3 +1,4 @@
+// Package Ozon_fintech implement http server for generation zip link
 package Ozon_fintech
 
 import (
@@ -6,10 +7,12 @@ import (
 	"time"
 )
 
+// A Server is small shell of http.Server
 type Server struct {
 	httpServer *http.Server
 }
 
+// Run starts the server
 func (s *Server) Run(port string, handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
@@ -22,6 +25,7 @@ func (s *Server) Run(port string, handler http.Handler) error {
 	return s.httpServer.ListenAndServe()
 }
 
+// ShutDown need to gracefully shutdown
 func (s *Server) ShutDown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }

@@ -1,3 +1,4 @@
+// Package storage implement my custom key-value storage
 package storage
 
 import (
@@ -22,8 +23,10 @@ const (
 	POST
 )
 
+// Func is function to generate random string
 type Func func() string
 
+// result is result of request
 type result struct {
 	value string
 	err   error
@@ -39,12 +42,14 @@ type Storage struct {
 	requests chan request
 }
 
+// New implement Storage and starting storage server
 func New(f Func) *Storage {
 	storage := &Storage{requests: make(chan request)}
 	go storage.serve(f)
 	return storage
 }
 
+// Get - get key by value
 func (s *Storage) Get(key string) (string, error) {
 	response := make(chan result)
 	s.requests <- request{key: key, response: response, queryType: GET}
@@ -52,6 +57,7 @@ func (s *Storage) Get(key string) (string, error) {
 	return res.value, res.err
 }
 
+// Post - add new key
 func (s *Storage) Post(key string) (string, error) {
 	response := make(chan result)
 	s.requests <- request{key: key, response: response, queryType: POST}
@@ -63,6 +69,7 @@ func (s *Storage) Close() {
 	close(s.requests)
 }
 
+// serve - serving requests
 func (s *Storage) serve(f Func) {
 	storage := make(map[string]string)
 	used := make(map[string]string)

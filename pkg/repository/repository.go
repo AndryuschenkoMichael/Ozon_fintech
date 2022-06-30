@@ -1,3 +1,4 @@
+// Package repository implement data storing logic
 package repository
 
 import (

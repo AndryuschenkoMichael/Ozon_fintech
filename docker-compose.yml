@@ -14,7 +14,7 @@ services:
     command: ./Links -db_type POSTGRES
 
     # Режим работы, где в качестве хранилища STORAGE(собственное хранилище)
-#    command: ./Links -db_type STORAGE
+    #command: ./Links -db_type STORAGE
 
     ports:
       - "8000:8080"

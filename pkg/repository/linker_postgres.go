@@ -14,6 +14,7 @@ type LinkerPostgres struct {
 	gen *strgen.StringGenerator
 }
 
+// GetFullLink - get full link from Postgres by short link
 func (l *LinkerPostgres) GetFullLink(shortLink string) (string, error) {
 	var count int
 	tx, err := l.db.Begin()
@@ -49,6 +50,7 @@ func (l *LinkerPostgres) GetFullLink(shortLink string) (string, error) {
 
 }
 
+// SetShortLink - insert full link into Postgres and return short link
 func (l *LinkerPostgres) SetShortLink(fullLink string) (string, error) {
 	var count int
 	tx, err := l.db.Begin()
