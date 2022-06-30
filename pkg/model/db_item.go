@@ -1,4 +1,3 @@
-// Package model contains help model
 package model
 
 type DBItem struct {
