@@ -1,0 +1,103 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Zip linker service",
+        "title": "Ozon fintech",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/api/get-full-link": {
+            "get": {
+                "description": "Get full link",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get full link by short form",
+                "operationId": "get-full-link",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "full link",
+                        "name": "link",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/post-link": {
+            "post": {
+                "description": "Post link",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get short link",
+                "operationId": "post-link",
+                "parameters": [
+                    {
+                        "description": "full link",
+                        "name": "linkInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LinkInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "405": {
+                        "description": "Method not allowed"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.LinkInfo": {
+            "type": "object",
+            "properties": {
+                "full_link": {
+                    "type": "string",
+                    "example": "https://pkg.go.dev/"
+                }
+            }
+        }
+    }
+}

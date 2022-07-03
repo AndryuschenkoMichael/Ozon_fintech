@@ -1,0 +1,68 @@
+basePath: /
+definitions:
+  model.LinkInfo:
+    properties:
+      full_link:
+        example: https://pkg.go.dev/
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: Zip linker service
+  title: Ozon fintech
+  version: "1.0"
+paths:
+  /api/get-full-link:
+    get:
+      consumes:
+      - text/plain
+      description: Get full link
+      operationId: get-full-link
+      parameters:
+      - description: full link
+        in: query
+        name: link
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal server error
+      summary: Get full link by short form
+      tags:
+      - API
+  /api/post-link:
+    post:
+      consumes:
+      - application/json
+      description: Post link
+      operationId: post-link
+      parameters:
+      - description: full link
+        in: body
+        name: linkInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.LinkInfo'
+      produces:
+      - text/plain
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad request
+        "405":
+          description: Method not allowed
+        "500":
+          description: Internal server error
+      summary: Get short link
+      tags:
+      - API
+swagger: "2.0"
